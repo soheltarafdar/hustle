@@ -45,16 +45,28 @@
  
 <body>
     <div id="sample">
-        Geeksforgeeks is best learning platform.
+       Customer Segregation Process Using Html
     </div>
     <br />
      
-    <button onclick="tcp()">Tea customer</button>
+    <button onclick="tcp()">Total customer</button>
+    <br />
+
+    <br />
+     
+    <button onclick="udp()">Udpate customer</button>
+    <br />
+    <br />
+     
+    <button onclick="broadcast()">Broad customer</button>
+    <br />
+    <br />
+     
+    <button onclick="rumi()">Remaining customer</button>
     <br />
  
 
-    <h1>Copied Text:</h1><br />
-    <textarea id="textbox"></textarea>
+
      
     <script>
 
@@ -112,12 +124,206 @@ System.out.println(e.toString());
 }`
 
 
+const udpc= `
+import java.io.*;
+import java.net.*;
+public class udpServerEO {
+public static void main(String args[]) {
+try {
+DatagramSocket ds = new DatagramSocket(2000);
+byte b[] = new byte[1024];
+DatagramPacket dp = new DatagramPacket(b, b.length);
+ds.receive(dp);
+String str = new String(dp.getData(), 0, dp.getLength());
+System.out.println(str);
+int a = Integer.parseInt(str);
+String s = (a % 2 == 0) ? "Number is even" : "Number is odd";
+byte b1[] = s.getBytes();
+DatagramPacket dp1 = new DatagramPacket(b1, b1.length, InetAddress.getLocalHost(), 1000);
+ds.send(dp1);
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+}
 
+import java.io.*;
+import java.net.*;
+
+public class udpClientEO {
+    public static void main(String args[]) {
+        try {
+            DatagramSocket ds = new DatagramSocket(1000);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Enter a number : ");
+            String num = br.readLine();
+            byte b[] = new byte[1024];
+            b = num.getBytes();
+            DatagramPacket dp = new DatagramPacket(b, b.length, InetAddress.getLocalHost(), 2000);
+            ds.send(dp);
+            byte b1[] = new byte[1024];
+            DatagramPacket dp1 = new DatagramPacket(b1, b1.length);
+            ds.receive(dp1);
+            String str = new String(dp1.getData(), 0, dp1.getLength());
+            System.out.println(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+`
+
+
+const broad= `
+import java.net.*;
+import java.io.*;
+import java.util.*;
+public class BroadcastServer
+{
+public static final int PORT = 1234;
+public static void main(String args[])throws
+Exception {
+MulticastSocket socket;
+DatagramPacket packet;
+InetAddress address;
+// =set the multicast address to your local subnet
+address = InetAddress.getByName("239.1.2.3");
+socket = new MulticastSocket();
+// join a Multicast group and send the group messages
+socket.joinGroup(address);
+byte[] data =
+null;
+for(;;)
+{
+Thread.sleep(10000);
+System.out.println("Sending ");
+String str = ("This is Neha Calling....");
+data = str.getBytes();
+packet = new DatagramPacket(data, str.length(),address,PORT);
+import java.net.*;
+import java.io.*;
+import java.util.*;
+public class BroadcastServer
+{
+public static final int PORT = 1234;
+public static void main(String args[])throws
+Exception {
+MulticastSocket socket;
+DatagramPacket packet;
+InetAddress address;
+// =set the multicast address to your local subnet
+address = InetAddress.getByName("239.1.2.3");
+socket = new MulticastSocket();
+// join a Multicast group and send the group messages
+socket.joinGroup(address);
+byte[] data =
+null;
+for(;;)
+{
+Thread.sleep(10000);
+System.out.println("Sending ");
+String str = ("This is Neha Calling....");
+data = str.getBytes();
+packet = new DatagramPacket(data, str.length(),address,PORT);
+
+
+
+import java.net.*;
+import java.io.*;
+public class BroadcastClient
+{
+public static final int PORT = 1234;
+public static void main(String args[])throws
+Exception {
+MulticastSocket socket;
+DatagramPacket packet;
+InetAddress address;
+/ set the mulitcast address to your local subnet
+address = InetAddress.getByName("239.1.2.3");
+socket = new MulticastSocket(PORT);
+//join a Multicast group and wait for a message
+socket.joinGroup(address);
+byte[] data = new byte[100];
+packet = new DatagramPacket(data,data.length);
+for(;;)
+{
+// receive the packets
+socket.receive(packet);
+String str = new String(packet.getData());
+System.out.println("Message received from "+packet.getAddress() + "Message is : "+str);
+} // for
+} // main
+} // end BroadcastClient
+`
+
+
+
+const Rmi=`
+import java.rmi.registry.LocateRegistry; import java.rmi.*;
+import java.rmi.server.*;
+import java.util.*;
+public class ServerWhichShowsDATE extends UnicastRemoteObject implements ShowMeTheDate
+{
+public ServerWhichShowsDATE() throws RemoteException {
+super(); // Call the constructor of the parent class (UnicastRemoteObject)
+}
+public String display() throws Exception{
+String str ="";
+Date d= new Date();
+str = d.toString();
+return str;
+}
+public static void main(String args[]) throws Exception
+{
+ServerWhichShowsDATE ServerDateobject = new ServerWhichShowsDATE();
+Naming.bind("DS",ServerDateobject);
+System.out.println(“student”);
+System.out.println("Object registered");
+}
+}
+
+
+import java.rmi.*;
+public interface ShowMeTheDate extends Remote
+{
+public String display() throws Exception;
+}
+
+
+import java.rmi.*;
+import java.io.*;
+public class ClientDate{
+public static void main(String args[]) throws Exception{
+String ShowMeDate ;
+ShowMeTheDate Date1 = (ShowMeTheDate)Naming.lookup("DS");
+ShowMeDate = Date1.display();
+System.out.println(“Student”);
+System.out.println(ShowMeDate);
+}
+}
+`
 
 function tcp() {
             /* Copy text into clipboard */
             navigator.clipboard.writeText(tcpc);
         }
+
+        function udp() {
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(udpc);
+        }
+
+        function broadcast() {
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(broad);
+        }
+
+        function rumi() {
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(Rmi);
+        }
+        
         
 
     </script>
