@@ -260,47 +260,46 @@ System.out.println("Message received from "+packet.getAddress() + "Message is : 
 
 
 const Rmi=`
-import java.rmi.registry.LocateRegistry; import java.rmi.*;
+import java.rmi.*;
 import java.rmi.server.*;
 import java.util.*;
-public class ServerWhichShowsDATE extends UnicastRemoteObject implements ShowMeTheDate
-{
-public ServerWhichShowsDATE() throws RemoteException {
-super(); // Call the constructor of the parent class (UnicastRemoteObject)
+interface InterDate extends Remote {
+String display() throws RemoteException;
 }
-public String display() throws Exception{
-String str ="";
-Date d= new Date();
-str = d.toString();
-return str;
+public class ServerDate extends UnicastRemoteObject implements InterDate {
+public ServerDate() throws RemoteException {
 }
-public static void main(String args[]) throws Exception
-{
-ServerWhichShowsDATE ServerDateobject = new ServerWhichShowsDATE();
-Naming.bind("DS",ServerDateobject);
-System.out.println(“student”);
-System.out.println("Object registered");
-}
+public String display() throws RemoteException {
+    String str = "";
+    Date d = new Date();
+    str = d.toString();
+    return str;
+    }
+    public static void main(String args[]) throws Exception {
+    ServerDate s1 = new ServerDate();
+    Naming.bind("DS", s1);
+   
+    System.out.println("Object registered.....");
+    }
 }
 
-
-import java.rmi.*;
-public interface ShowMeTheDate extends Remote
-{
-public String display() throws Exception;
-}
 
 
 import java.rmi.*;
 import java.io.*;
-public class ClientDate{
-public static void main(String args[]) throws Exception{
-String ShowMeDate ;
-ShowMeTheDate Date1 = (ShowMeTheDate)Naming.lookup("DS");
-ShowMeDate = Date1.display();
-System.out.println(“Student”);
-System.out.println(ShowMeDate);
+public class ClientDate {
+public static void main(String args[]) throws Exception {
+String s1;
+InterDate h1 = (InterDate) Naming.lookup("DS");
+s1 = h1.display();
+
+System.out.println(s1);
 }
+
+
+import java.rmi.*;
+public interface InterDate extends Remote {
+String display() throws RemoteException;
 }
 `
 
