@@ -1,7 +1,125 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <style>
+        body {
+            margin: 100px;
+        }
+ 
+        #textbox {
+            width: 40vw;
+            height: 30vh;
+            position: absolute;
+            margin-left: 50px;
+            margin-top: 20px;
+        }
+ 
+        button {
+            width: 70px;
+            height: 40px;
+            margin-top: 120px;
+            margin-left: 50px;
+            background-color: green;
+            color: white;
+            border-radius: 10px;
+            box-shadow: grey;
+            position: absolute;
+        }
+ 
+        #sample {
+            width: 70vw;
+            margin: 50px;
+            background-color: green;
+            color: white;
+            padding: 20px;
+            font-size: x-large;
+            position: absolute;
+        }
+ 
+        h1 {
+            margin-left: 50px;
+            margin-top: 160px;
+        }
+    </style>
+</head>
+ 
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <div id="sample">
+        Geeksforgeeks is best learning platform.
+    </div>
+    <br />
+     
+    <button onclick="tcp()">Tea customer</button>
+    <br />
+ 
+
+    <h1>Copied Text:</h1><br />
+    <textarea id="textbox"></textarea>
+     
+    <script>
+
+const tcpc = `
+import java.net.*;
+import java.io.*;
+class tcpClientPrime {
+public static void main(String args[]) {
+try {
+Socket cs = new Socket("LocalHost", 8001);
+BufferedReader infu = new BufferedReader(new InputStreamReader(System.in));
+System.out.println("Enter a number : ");
+int a = Integer.parseInt(infu.readLine());
+DataOutputStream out = new DataOutputStream(cs.getOutputStream());
+out.writeInt(a);
+DataInputStream in = new DataInputStream(cs.getInputStream());
+System.out.println(in.readUTF());
+cs.close();
+} catch (Exception e) {
+System.out.println(e.toString());
+}
+}
+}
+
+
+
+import java.net.*;
+import java.io.*;
+class tcpServerPrime {
+public static void main(String args[]) {
+try {
+ServerSocket ss = new ServerSocket(8001);
+System.out.println("Server Started...............");
+Socket s = ss.accept();
+DataInputStream in = new DataInputStream(s.getInputStream());
+DataOutputStream otc = new DataOutputStream(s.getOutputStream());
+int x = in.readInt();
+int y = x / 2;
+if (x == 1 || x == 2 || x == 3) {
+otc.writeUTF(x + " is Prime");
+System.exit(0);
+}
+for (int i = 2; i <= y; i++) {
+if (x % i != 0) {
+otc.writeUTF(x + " is Prime");
+} else {
+otc.writeUTF(x + " is not Prime");
+}
+}
+ss.close();
+} catch (Exception e)
+System.out.println(e.toString());
+}
+}
+}`
+
+
+
+
+function tcp() {
+            /* Copy text into clipboard */
+            navigator.clipboard.writeText(tcpc);
+        }
+        
+
+    </script>
 </body>
 </html>
