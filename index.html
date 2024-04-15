@@ -58,7 +58,8 @@
 <body>
 
     <button onclick="copyText(text1)">MVC Application</button>
-	<button onclick="copyText(text2)">iamge pull push</button>
+	<button onclick="copyText(text2)">image pull push</button>
+	<button onclick="copyText(text2)">Static volume</button>
     <p id="copiedMsg"></p>
     <h6>If You are using jupyter online and getting "PyodideFuture" Error use await keyword before input e.g float(await input("Enter Number")) and make sure that per cell has a single input method</h6>
     <script>
@@ -138,6 +139,15 @@ EOF
 
 docker run -p 80:80 <tagid>
 `
+
+var text3=`
+docker pull nginx
+docker run -it --name=webApp -d -p 80:80 nginx
+docker create volume myvolume
+docker run   -d   --name=webApp87  --mount source=myvolume,destination=/usr/share/nginx/html -p 80:80 nginx 
+cd /var/lib/docker/volume/myvolume/_data
+echo "hello">index.html
+docker run   -d   --name=webApp84  --mount source=myvolume,destination=/usr/share/nginx/html -p 80:80 nginx `
 
         function copyText(text) {
             navigator.clipboard.writeText(text).then(function () {
