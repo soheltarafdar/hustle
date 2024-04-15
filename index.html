@@ -62,26 +62,60 @@
     <h6>If You are using jupyter online and getting "PyodideFuture" Error use await keyword before input e.g float(await input("Enter Number")) and make sure that per cell has a single input method</h6>
     <script>
 var text1 = `
-from Crypto.PublicKey import RSA
-from Crypto import Random
-from Crypto.Cipher import PKCS1_v1_5
-import binascii
-random=Random.new().read
-key=RSA.generate(4096,random)
-print("Encypt STR")
-message=b'STR'
-cipher=PKCS1_v1_5.new(key)
-text=cipher.encrypt(message)
-print("Encruped message is:" , binascii.hexlify(text))
+1.open cmd (to folder location)
 
-import rsa
-(pubkey,prikey)=rsa.newkeys(4096)
-print("Encypt STR")
-message=b'STR'
-encrypted_message = rsa.encrypt(message, pubkey) # Encryption
-print("Emcrypted message is: ",encrypted_message)
-decrypted_message = rsa.decrypt(encrypted_message, prikey)
-print("\nDecrypted message is :", decrypted_message)`;
+dotnet new mvc --auth none
+
+2. paste it Controllers\HomeController.cs >public class HomeController : Controller
+
+public String Index()
+{
+	return "Hello World ";
+}
+
+part2
+3. Create Phone.cs in Models Folder
+using System;
+
+namespace Prac1_MVC.Models
+{
+    public class PhoneModel
+    {
+        public string Phone { get; set; }
+    }
+}
+
+
+
+4. edit \MyMVC\Views\Home\Index.cshtml as below
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+	<p>phone : @Model.Phone</p>
+</div>
+
+
+5. edit  HomeController.cs
+namespace Prac1_MVC.Controllers
+{
+    public class HomeController : Controller
+    {
+
+
+        public async Task <IActionResult> Index()
+        {
+			var H = new PhoneModel{Phone="Iphone"};
+            return view(H);
+        }
+
+    }
+}
+
+`;
 
 
         function copyText(text) {
