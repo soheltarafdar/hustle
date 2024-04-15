@@ -58,6 +58,7 @@
 <body>
 
     <button onclick="copyText(text1)">MVC Application</button>
+	<button onclick="copyText(text2)">iamge pull push</button>
     <p id="copiedMsg"></p>
     <h6>If You are using jupyter online and getting "PyodideFuture" Error use await keyword before input e.g float(await input("Enter Number")) and make sure that per cell has a single input method</h6>
     <script>
@@ -116,7 +117,27 @@ namespace Prac1_MVC.Controllers
 }
 
 `;
+var text2=`
+docker pull rocker/verse
 
+docker login --username=
+
+docker images
+
+docker tag 36d2b6f2a7b3 soheltarafdar1010/pracpush:pracexam
+
+docker push soheltarafdar1010/pracpush:pracexam
+
+
+pt2
+
+cat >Dockerfile<<EOF
+CMD echo "name name name"
+EOF
+
+
+docker run -p 80:80 <tagid>
+`
 
         function copyText(text) {
             navigator.clipboard.writeText(text).then(function () {
@@ -125,6 +146,8 @@ namespace Prac1_MVC.Controllers
                 console.error('Unable to copy text', err);
             });
         }
+
+	    
     </script>
 
 </body>
