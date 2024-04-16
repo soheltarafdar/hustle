@@ -61,6 +61,7 @@
 	<button onclick="copyText(text2)">image pull push</button>
 	<button onclick="copyText(text3)">Static volume</button>
 	<button onclick="copyText(text4)">circle CI</button>
+	<button onclick="copyText(text5)">team service</button>
     <p id="copiedMsg"></p>
     <h6>If You are using jupyter online and getting "PyodideFuture" Error use await keyword before input e.g float(await input("Enter Number")) and make sure that per cell has a single input method</h6>
     <script>
@@ -191,6 +192,32 @@ workflows:
     jobs:
       - one
       - two`
+
+
+	var text5 =`docker run -d -p 5000:5000 -e PORT=5000 \-e LOCATION_URL=http://localhost:5001 \dotnetcoreservices/teamservice:location
+
+docker run -d -p 5001:5001 -e PORT=5001 dotnetcoreservices/locationservice:nodb
+
+curl -H "Content-Type:application/json" -X POST -d \
+'{"id":"e52baa63-d511-417e-9e54-7aab04286281","name":"KC"}' http://localhost:5000/teams
+
+
+curl http://localhost:5000/teams/e52baa63-d511-417e-9e54-7aab04286281
+
+
+curl -H "Content-Type:application/json" -X POST http://localhost:5000/teams/e52baa63-d511-417e-9e54-7aab04286281/members -d '{"id":"63e7acf8-8fae-42ce-9349-3c8593ac8292", "firstName":"X", "lastName":"Y"}'
+
+
+
+curl http://localhost:5000/teams/e52baa63-d511-417e-9e54-7aab04286281
+
+
+curl -H "Content-Type:application/json" -X POST -d \
+'{"id":"64c3e69f-1580-4b2f-a9ff-2c5f3b8f0e1f", "latitude":12.0,"longitude":12.0,"altitude":10.0, "timestamp":0,"memberId":"63e7acf8-8fae-42ce-9349-3c8593ac8292"}'
+http://localhost:5001/locations/63e7acf8- 8fae-42ce-9349-3c8593ac8292
+
+
+curl http://localhost:5001/locations/63e7acf8-8fae-42ce-9349-3c8593ac8292`
 
         function copyText(text) {
             navigator.clipboard.writeText(text).then(function () {
