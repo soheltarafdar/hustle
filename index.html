@@ -58,6 +58,7 @@
 <body>
 
     <button onclick="copyText(text1)">MVC Application</button>
+	<button onclick="copyText(text7)">glossaryAPI</button>
 	<button onclick="copyText(text2)">image pull push</button>
 	<button onclick="copyText(text3)">Static volume</button>
 	<button onclick="copyText(text4)">circle CI</button>
@@ -240,7 +241,134 @@ kubectl create deployment mydep --image=nginx --replicas=3`
                 console.error('Unable to copy text', err);
             });
         }
+var text7=`
 
+curl --insecure https://localhost:5001/weatherforecast
+
+1.change weatherforecast.cs to GlossaryItem.cs
+using System;
+
+namespace Glossary
+{
+public class GlossaryItem
+{
+public string Term { get; set; }
+public string Definition { get; set; }
+}
+}
+
+
+
+
+2.Change Weatherforecast.cs  to GlossaryController.cs
+using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+namespace Glossary.Controllers
+{
+[ApiController]
+[Route("api/[controller]")]
+public class GlossaryController: ControllerBase
+{
+private static List<GlossaryItem> Glossary = new List<GlossaryItem> {
+new GlossaryItem
+{
+Term= "HTML",
+Definition = "Hypertext Markup Language"
+},
+new GlossaryItem
+{
+Term= "MVC",
+Definition = "Model View Controller"
+},
+new GlossaryItem
+{
+Term= "OpenID",
+Definition = "An open standard for authentication"
+}
+};
+[HttpGet]
+public ActionResult<List<GlossaryItem>> Get()
+{ return Ok(Glossary);
+}
+[HttpGet]
+[Route("{term}")]
+public ActionResult<GlossaryItem> Get(string term)
+{
+var glossaryItem = Glossary.Find(item =>item.Term.Equals(term, StringComparison.InvariantCultureIgnoreCase));
+if (glossaryItem == null)
+{ return NotFound();
+} else
+{
+return Ok(glossaryItem);
+}
+}
+[HttpPost]
+public ActionResult Post(GlossaryItem glossaryItem)
+{
+var existingGlossaryItem = Glossary.Find(item =>
+item.Term.Equals(glossaryItem.Term, StringComparison.InvariantCultureIgnoreCase));
+if (existingGlossaryItem != null)
+{
+return Conflict("Cannot create the term because it already exists.");
+}
+else
+{
+Glossary.Add(glossaryItem);
+var resourceUrl = Path.Combine(Request.Path.ToString(), Uri.EscapeUriString(glossaryItem.Term));
+return Created(resourceUrl, glossaryItem);
+}
+}
+[HttpPut]
+public ActionResult Put(GlossaryItem glossaryItem)
+{
+var existingGlossaryItem = Glossary.Find(item =>
+item.Term.Equals(glossaryItem.Term, StringComparison.InvariantCultureIgnoreCase));
+if (existingGlossaryItem == null)
+{
+return BadRequest("Cannot update a nont existing term.");
+} else
+{
+existingGlossaryItem.Definition = glossaryItem.Definition;
+return Ok();
+}
+}
+[HttpDelete]
+[Route("{term}")]
+public ActionResult Delete(string term)
+{
+var glossaryItem = Glossary.Find(item =>
+item.Term.Equals(term, StringComparison.InvariantCultureIgnoreCase));
+if (glossaryItem == null)
+{ return NotFound();
+}
+{ Glossary.Remove(glossaryItem);
+return NoContent();
+}}}}
+
+
+
+
+
+read all
+curl --insecure https://localhost:5001/api/glossary
+
+read one
+curl --insecure https://localhost:5001/api/glossary/MVC
+
+
+POST
+curl --insecure -X POST -d "{\"term\":\"hello\",\"definition\":\"world\"}" -H "Content-Type:application/json" https://localhost:5001/api/glossary
+
+PUT
+curl --insecure -X PUT -d "{\"term\":\"hello\",\"definition\":\"world world\"}" -H "Content-Type:application/json" https://localhost:5001/api/glossary
+
+
+Delete
+curl --insecure --request DELETE --url https://localhost:5001/api/glossary/hello
+	
+`
 	    
     </script>
 
